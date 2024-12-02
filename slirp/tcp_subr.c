@@ -668,12 +668,12 @@ tcp_emu(so, m)
 							break;
 						}
 					}
+					so_rcv->sb_cc = snprintf(so_rcv->sb_data,
+								 so_rcv->sb_datalen,
+								 "%d,%d\r\n", n1, n2);
+					so_rcv->sb_rptr = so_rcv->sb_data;
+					so_rcv->sb_wptr = so_rcv->sb_data + so_rcv->sb_cc;
 				}
-                                so_rcv->sb_cc = snprintf(so_rcv->sb_data,
-                                                         so_rcv->sb_datalen,
-                                                         "%d,%d\r\n", n1, n2);
-				so_rcv->sb_rptr = so_rcv->sb_data;
-				so_rcv->sb_wptr = so_rcv->sb_data + so_rcv->sb_cc;
 			}
 			m_free(m);
 			return 0;
